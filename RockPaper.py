@@ -21,16 +21,6 @@ beats = {
     "rock": "lizard",
     "lizard": "paper"
 }
-smartlogic = {
-    "rock": "scissors",
-    "paper": "rock",
-    "scissors": "paper",
-    "paper": "spock",
-    "scissors": "lizard",
-    "spock": "rock",
-    "rock": "lizard",
-    "lizard": "paper"
-}
 
 # functions
 def coreLogic(CPU, User):
