@@ -9,13 +9,18 @@ import random
 
 userScore = 0
 CPUScore = 0
-options = ['rock' , 'paper' , 'scissors']
+options = ['rock' , 'paper' , 'scissors', 'lizard', 'spock']
 gameModes = ['random' , 'smart']
 userLastChoice = None
 beats={
     "rock": "scissors",
     "paper": "rock",
-    "scissors": "paper"
+    "scissors": "paper",
+    "paper": "spock",
+    "scissors": "lizard",
+    "spock": "rock",
+    "rock": "lizard",
+    "lizard": "paper"
 }
 
 #functions
