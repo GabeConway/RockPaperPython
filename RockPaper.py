@@ -8,8 +8,8 @@ import random
 
 userScore = 0
 CPUScore = 0
-options = ['rock', 'paper', 'scissors', 'lizard', 'spock']
-gameModes = ['random', 'smart']
+options = ["rock", "paper", "scissors", "lizard", "spock"]
+gameModes = ["random", "smart"]
 userLastChoice = None
 beats = {
     "rock": "scissors",
@@ -19,7 +19,7 @@ beats = {
     "scissors": "lizard",
     "spock": "rock",
     "rock": "lizard",
-    "lizard": "paper"
+    "lizard": "paper",
 }
 
 # functions
@@ -47,12 +47,12 @@ def smartMode():
 def resultProcess(result):
     global userScore
     global CPUScore
-    if result == 'win':
+    if result == "win":
         print("You won!")
         userScore += 1
-    if result == 'tie':
+    if result == "tie":
         print("You tied!")
-    if result == 'lose':
+    if result == "lose":
         print("You Lost!!")
         CPUScore += 1
 
@@ -68,7 +68,7 @@ def scoreProcess():
 
 def inputValidate(choice):
     if choice not in options:
-        raise Exception('Invalid choice')
+        raise Exception("Invalid choice")
     return choice
 
 
@@ -81,21 +81,23 @@ print(f"Please select difficulty: {gameModes}")
 Difficulty = input()
 # validate input
 if Difficulty not in gameModes:
-    raise Exception('Invalid difficulty')
+    raise Exception("Invalid difficulty")
 
 # collect first round
 print("This game is best out of 3 rounds. Please make your first choice.")
 roundNumber = 1
 while roundNumber < 4:
-    print("Round number:", roundNumber, "Your Score:", userScore, "CPU Score:", CPUScore)
+    print(
+        "Round number:", roundNumber, "Your Score:", userScore, "CPU Score:", CPUScore
+    )
     print(f"Options are {options}")
     choice = inputValidate(input())
 
-    if Difficulty == 'random':
+    if Difficulty == "random":
         CPUChoice = randomMode()
         resultProcess(coreLogic(CPUChoice, choice))
 
-    if Difficulty == 'smart':
+    if Difficulty == "smart":
         if roundNumber == 1:
             CPUChoice = randomMode()
             resultProcess(coreLogic(CPUChoice, choice))
