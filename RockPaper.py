@@ -5,114 +5,70 @@
 import random
 
 # Variable declaration
-
-userScore = 0
-CPUScore = 0
-options = ["rock", "paper", "scissors", "lizard", "spock"]
+scores={"User":0, "CPU":0}
 gameModes = ["random", "smart"]
 userLastChoice = None
-beats = {
+beats = { 
     "rock": "scissors",
     "paper": "rock",
     "scissors": "paper",
-    "paper": "spock",
-    "scissors": "lizard",
-    "spock": "rock",
-    "rock": "lizard",
-    "lizard": "paper",
+    # "paper": "spock", #DANGER DUP KEYS here on out
+    # "scissors": "lizard",
+    # "spock": "rock",
+    # "rock": "lizard",
+    # "lizard": "paper",
 }
-
+options=[*beats]
+#----------------------------------------------------------------
 # functions
-def coreLogic(CPU, User):
+def coreLogic(CPU, User, scores):
     if User == CPU:
-        return "tie"
+        print("You tied")
+        return scores
     if beats[CPU] == User:
-        return "lose"
-    else:
-        return "win"
+        scores["CPU"]+=1
+        print("You lose")
+        return scores
+    scores["User"]+=1
+    print("You win")
+    return scores
 
-
-def randomMode():
-    CPUChoice = random.choice(options)
-    print("CPU chose " + CPUChoice)
-    return CPUChoice
-
-
-def smartMode():
-    CPUChoice = beats[userLastChoice]
-    print("CPU chose " + CPUChoice)
-    return CPUChoice
-
-
-def resultProcess(result):
-    global userScore
-    global CPUScore
-    if result == "win":
-        print("You won!")
-        userScore += 1
-    if result == "tie":
-        print("You tied!")
-    if result == "lose":
-        print("You Lost!!")
-        CPUScore += 1
-
-
-def scoreProcess():
-    if userScore == 2:
+def scoreProcess(scores):
+    print(f'Final Score User: {scores["User"]}, CPU: {scores["CPU"]}')
+    if scores["User"] > scores["CPU"]:
         print(name + " won 2 out of three rounds! Your mother should be proud!")
         exit()
-    elif CPUScore == 2:
-        print(name + " lost out of three rounds! Your father must be disappointed")
+    if scores["CPU"] == scores["User"]:
+        print(name + " and CPU tied! Way to bring the mediocrity. Please play again :)")
         exit()
-
-
-def inputValidate(choice):
-    if choice not in options:
-        raise Exception("Invalid choice")
-    return choice
-
-
+    print(name + " lost out of three rounds! Your father must be disappointed")
+    exit()
+    
 # collect input options
 print("Welcome to Gabe's Rock Paper Scissors Game!")
-print("Please enter your name:")
-name = input()
+name = None
+while not name:
+    name = input("Please enter your name: ")  
 print("Hello " + name)
-print(f"Please select difficulty: {gameModes}")
-Difficulty = input()
+
+Difficulty = None
 # validate input
-if Difficulty not in gameModes:
-    raise Exception("Invalid difficulty")
+while Difficulty not in gameModes:
+    Difficulty = input(f"Please select difficulty: {gameModes} ")
 
 # collect first round
 print("This game is best out of 3 rounds. Please make your first choice.")
-roundNumber = 1
-while roundNumber < 4:
-    print(
-        "Round number:", roundNumber, "Your Score:", userScore, "CPU Score:", CPUScore
-    )
-    print(f"Options are {options}")
-    choice = inputValidate(input())
-
-    if Difficulty == "random":
-        CPUChoice = randomMode()
-        resultProcess(coreLogic(CPUChoice, choice))
-
-    if Difficulty == "smart":
-        if roundNumber == 1:
-            CPUChoice = randomMode()
-            resultProcess(coreLogic(CPUChoice, choice))
-        else:
-            CPUChoice = smartMode()
-            resultProcess(coreLogic(CPUChoice, choice))
-
-    roundNumber += 1
-    scoreProcess()
+for roundNumber in range(1,4):
+    print(f'Round number: {roundNumber}, Your Score: {scores["User"]}, CPU Score: {scores["CPU"]}')
+    choice=None
+    while choice not in options:
+        choice = input(f"Options are {options} ")
     userLastChoice = choice
+    if Difficulty == "smart" and roundNumber > 1:
+        CPUChoice = beats[userLastChoice]
+    else:
+        CPUChoice = random.choice(options)
+    print("CPU choose " + CPUChoice)
+    coreLogic(CPUChoice, choice, scores) 
 
-# find out who won or if tie
-if CPUScore > userScore:
-    print(name + " lost out of three rounds! Your father must be disappointed")
-elif CPUScore == userScore:
-    print(name + " and CPU tied! Please play again :)")
-else:
-    print(name + " won best out of three rounds! Your mother should be proud!")
+scoreProcess(scores)
