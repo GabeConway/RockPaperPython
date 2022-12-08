@@ -8,31 +8,15 @@ import random
 scores={"User":0, "CPU":0}
 gameModes = ["random", "smart"]
 userLastChoice = None
-beats = { 
+beats = {
     "rock": "scissors",
     "paper": "rock",
     "scissors": "paper",
-    # "paper": "spock", #DANGER DUP KEYS here on out
-    # "scissors": "lizard",
-    # "spock": "rock",
-    # "rock": "lizard",
-    # "lizard": "paper",
 }
 options=[*beats]
+
 #----------------------------------------------------------------
 # functions
-def coreLogic(CPU, User, scores):
-    if User == CPU:
-        print("You tied")
-        return scores
-    if beats[CPU] == User:
-        scores["CPU"]+=1
-        print("You lose")
-        return scores
-    scores["User"]+=1
-    print("You win")
-    return scores
-
 def scoreProcess(scores):
     print(f'Final Score User: {scores["User"]}, CPU: {scores["CPU"]}')
     if scores["User"] > scores["CPU"]:
@@ -43,7 +27,7 @@ def scoreProcess(scores):
         exit()
     print(name + " lost out of three rounds! Your father must be disappointed")
     exit()
-    
+
 # collect input options
 print("Welcome to Gabe's Rock Paper Scissors Game!")
 name = None
@@ -69,6 +53,14 @@ for roundNumber in range(1,4):
     else:
         CPUChoice = random.choice(options)
     print("CPU choose " + CPUChoice)
-    coreLogic(CPUChoice, choice, scores) 
+    if choice == CPUChoice:
+        print("You tied")
+    elif beats[CPUChoice] == choice:
+        scores["CPU"] += 1
+        print("You lose")
+    else:
+        scores["User"] += 1
+        print("You win")
 
 scoreProcess(scores)
+
