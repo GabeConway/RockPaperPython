@@ -10,7 +10,7 @@ Download the rock_paper_python.py file and save it to a location on your compute
 
 Open a terminal or command prompt and navigate to the directory where you saved the rock_paper_python.py file.
 
-Run the game by typing python rock_paper_python.py and pressing enter.
+Run the game by typing `python rock_paper_python.py` and pressing enter.
 
 Follow the on-screen instructions to select a game mode and make your choices.
 
